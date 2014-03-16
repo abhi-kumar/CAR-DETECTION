@@ -10,6 +10,10 @@ The number of main cascade files are set to 4.It can be changed by simple manipu
 
 The number of checkcascades are set to 1.It is desirable not to change this number.
 
+USAGE: ./car_detect IMAGE.EXTENTION checkcas.xml cas1.xml cas2.xml cas3.xml cas4.xml ..........upto n number of main cascade xml files
+
+ckeckcas.xml is the one trained with smallest size parameters and the rest are the main cascades
+
 */
 
 #include "opencv2/objdetect/objdetect.hpp"
@@ -21,6 +25,15 @@ The number of checkcascades are set to 1.It is desirable not to change this numb
 
 using namespace std;
 using namespace cv;
+
+
+void help()
+{
+	cout << endl << "USAGE: ./car_detect IMAGE.EXTENTION checkcas.xml cas1.xml cas2.xml cas3.xml cas4.xml ..........upto n number of main cascade xml files" << endl;
+	cout << endl << "ckeckcas.xml is the one trained with smallest size parameters and the rest are the main cascades" << endl;
+}
+
+
 
 
 class cars     //main class
@@ -67,7 +80,7 @@ class cars     //main class
 		else
 		{
 			
-			cout << endl << "cascade : " << cascade_string << " loaded" << endl;
+			cout << "cascade : " << cascade_string << " loaded" << endl;
 		}
 
 	}
@@ -84,7 +97,7 @@ class cars     //main class
     	}
 		else
 		{
-			cout << endl << "checkcascade : " << checkcascade_string << " loaded" << endl;
+			cout<< "checkcascade : " << checkcascade_string << " loaded" << endl;
 		}
 	}
 
@@ -202,17 +215,12 @@ class cars     //main class
 			
 };
 
-void help()
-{
-	cout << endl << "USAGE: ./car_detect IMAGE.EXTENTION checkcas.xml cas1.xml cas2.xml cas3.xml cas4.xml" << endl;
-	cout << endl << "ckeckcas.xml is the one trained with smallest size parameters and the rest four are the main cascades" << endl;
-}       
+       
 
 		    	
 int main( int argc, const char** argv )
 {
-	
-	help();	
+		
 	double t = 0;
     t = (double)cvGetTickCount();              //starting timer
     Mat image1 = imread(argv[1],1);
@@ -222,30 +230,27 @@ int main( int argc, const char** argv )
 
 	
 	string checkcas = argv[2];
-	string cas1 = argv[3];
-	string cas2 = argv[4];
-	string cas3 = argv[5];
-	string cas4 = argv[6];
-	
-	
 
 	detectcars.getimage(image);           //get the image
 	detectcars.setnum();                  //set number of cars detected as 0
-	detectcars.checkcascade_load(checkcas);      //load the test cascade	
-
-
-
-	//Applying various cascades for a finer search.The order of the xml files was determined on experimental basis,based on numerous tests  
-
-		
-	detectcars.cascade_load(cas1);            
-	detectcars.findcars();
-	detectcars.cascade_load(cas2);
-	detectcars.findcars();
-	detectcars.cascade_load(cas3);
-	detectcars.findcars();
-	detectcars.cascade_load(cas4);
-	detectcars.findcars();
+	detectcars.checkcascade_load(checkcas);      //load the test cascade
+	
+	//Applying various cascades for a finer search.
+	if(argc > 3)
+	{
+		for(int i = 3;i<argc;i++)
+		{
+			string cas = argv[i];			
+			detectcars.cascade_load(cas);            
+			detectcars.findcars();
+		}
+	}
+	else
+	{
+		help();		
+		cout << endl << "Please provide atleast one main cascade xml file" << endl;
+	}
+	
 	t = (double)cvGetTickCount() - t;       //stopping the timer
     
 	if(detectcars.num!=0)
@@ -261,6 +266,11 @@ int main( int argc, const char** argv )
 	
 	return 0;
 }
+
+
+
+
+	
 
 
 
