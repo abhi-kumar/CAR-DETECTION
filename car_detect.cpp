@@ -13,8 +13,6 @@ are detected twice.
 
 Ever car detected in an image goes through a two stage testing.
 
-The number of main cascade files are set to 4.It can be changed by simple manipulation of the code in the main.
-
 The number of checkcascades are set to 1.It is desirable not to change this number.
 
 USAGE: ./car_detect IMAGE.EXTENTION checkcas.xml cas1.xml cas2.xml cas3.xml cas4.xml ..........upto n number of main cascade xml files
