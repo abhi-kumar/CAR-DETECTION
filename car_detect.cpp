@@ -1,3 +1,17 @@
+/* 
+This code provides faster car detection.
+
+Also for the first time multiple cascade files are used to detect objects,with a benefit that no two objects
+are detected twice.
+
+Ever car detected in an image goes through a two stage testing.
+
+The number of main cascade files are set to 4.It can be changed by simple manipulation of the code in the main.
+
+The number of checkcascades are set to 1.It is desirable not to change this number.
+
+*/
+
 #include "opencv2/objdetect/objdetect.hpp"
 #include "opencv2/highgui/highgui.hpp"
 #include "opencv2/imgproc/imgproc.hpp"
