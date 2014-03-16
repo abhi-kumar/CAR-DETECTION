@@ -1,4 +1,11 @@
 /* 
+
+
+ * @file car_detect.cpp
+ * @author Abhishek Kumar Annamraju
+
+
+
 This code provides faster car detection.
 
 Also for the first time multiple cascade files are used to detect objects,with a benefit that no two objects
