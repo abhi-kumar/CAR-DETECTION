@@ -166,8 +166,7 @@ class cars     //main class
         	vector<Rect> nestedcars;
         	Point center;
         	Scalar color = colors[i%8];
-        	int radius;
-
+        	
 	        	
 			//getting points for bouding a rectangle over the car detected by main
 			int x0 = cvRound(main->x);                              
